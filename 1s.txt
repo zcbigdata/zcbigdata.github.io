@@ -1,0 +1,1144 @@
+Query:
+    Summary:
+          -  Profile  ID:  83398e5a0f16430a-8a3554b9fd2ed883
+          -  Task  Type:  QUERY
+          -  Start  Time:  2024-08-23  16:02:35
+          -  End  Time:  2024-08-23  16:02:36
+          -  Total:  1s401ms
+          -  Task  State:  EOF
+          -  User:  root
+          -  Default  Db:  default_cluster:dw_ddbAEqIiCdH
+          -  Sql  Statement:  SELECT
+	s.patient_name  patientName,
+	s.empiid  empiNo,
+	s.outpat_no  clinicId,
+	s.jzlsh  clinicRegNo,
+	s.record_id  visitNo,
+	(  CASE  WHEN  f.is_emergency  =  1  THEN  1  ELSE  2  END  )  clinicType,
+	s.jzksbm  visitDeptCode,
+	s.jzksmc  visitDeptName,
+	s.doct_code  visitDocCode,
+	s.doct_sign  visitDocName,
+	s.zdrq  visitDate,
+	s.diag_code  diagCode,
+	s.diag_name  diagName,
+	'42017976-4-0001'  tenantCode,
+	s.visit_id  AS  visitid  
+FROM
+	dwd_lcyl_ord_seedoctrecord_merge  s
+	LEFT  JOIN  dwd_lcyl_fin_opr_register_merge  f  ON  s.jzlsh  =  f.clinic_code  
+	AND  f.hos_code  =  s.hos_code  
+WHERE
+	s.empiid  =  '1500535696'
+    Execution  Summary:
+          -  Workload  Group:  
+          -  Analysis  Time:  1ms
+          -  Plan  Time:  5ms
+              -  JoinReorder  Time:  N/A
+              -  CreateSingleNode  Time:  N/A
+              -  QueryDistributed  Time:  N/A
+              -  Init  Scan  Node  Time:  N/A
+              -  Finalize  Scan  Node  Time:  N/A
+                  -  Get  Splits  Time:  N/A
+                      -  Get  PARTITIONS  Time:  N/A
+                      -  Get  PARTITION  FILES  Time:  N/A
+                  -  Create  Scan  Range  Time:  N/A
+          -  Schedule  Time:  9ms
+          -  Fetch  Result  Time:  1s385ms
+          -  Write  Result  Time:  0ms
+          -  Wait  and  Fetch  Result  Time:  1s386ms
+          -  Doris  Version:  doris-2.0.4-rc06-7834fe1
+          -  Is  Nereids:  Yes
+          -  Is  Pipeline:  No
+          -  Is  Cached:  No
+          -  Total  Instances  Num:  10
+          -  Instances  Num  Per  BE:  172.18.8.81:8060:3,172.18.8.82:8060:4,172.18.8.83:8060:3
+          -  Parallel  Fragment  Exec  Instance  Num:  1
+          -  Trace  ID:  
+    Execution  Profile  83398e5a0f16430a-8a3554b9fd2ed883:(Active:  1s401ms,  %  non-child:  0.00%)
+        Fragments:
+            Fragment  0:
+                Instance  83398e5a0f16430a-8a3554b9fd2ed88d  (host=TNetworkAddress(hostname:172.18.8.82,  port:9060)):(Active:  1s357ms,  %  non-child:  0.00%)
+                      -  DorisBeVersion:  096a33a
+                      -  BlocksProduced:  8
+                      -  FragmentCpuTime:  750.771us
+                      -  RowsProduced:  19
+                    VDataBufferSender  (dst_fragment_instance_id=-7cc671a5f0e9bcf6--75caab4602d12773):
+                          -  AppendBatchTime:  710.545us
+                              -  CopyBufferTime:  0ns
+                              -  ResultSendTime:  423.423us
+                              -  TupleConvertTime:  167.966us
+                          -  BytesSent:  2.94  KB
+                          -  NumSentRows:  19
+                    VEXCHANGE_NODE  (id=1421):(Active:  1s356ms,  %  non-child:  0.00%)
+                          -  BlocksProduced:  8
+                          -  BytesReceived:  5.10  KB
+                          -  DataArrivalWaitTime:  1s356ms
+                          -  DecompressBytes:  5.20  KB
+                          -  DecompressTime:  24.910us
+                          -  DeserializeRowBatchTimer:  595.337us
+                          -  FirstBatchArrivalWaitTime:  599.941ms
+                          -  LocalBytesReceived:  0.00  
+                          -  MemoryUsage:  
+                              -  Blocks:  3.06  KB
+                              -  PeakMemoryUsage:  3.41  KB
+                          -  ProjectionTime:  0ns
+                          -  RowsProduced:  19
+                          -  RowsReturned:  19
+                          -  RowsReturnedRate:  14
+                          -  SendersBlockedTotalTimer(*):  0ns
+            Fragment  1:
+                Instance  83398e5a0f16430a-8a3554b9fd2ed88b  (host=TNetworkAddress(hostname:172.18.8.83,  port:9060)):(Active:  1s357ms,  %  non-child:  0.00%)
+                      -  DorisBeVersion:  096a33a
+                      -  BlocksProduced:  4
+                      -  FragmentCpuTime:  1.903ms
+                      -  RowsProduced:  11
+                    VDataStreamSender  (dst_id=1421,  dst_fragments=[{"83398e5a0f16430a-8a3554b9fd2ed88d"}]):(Active:  706.405us,  %  non-child:  0.00%)
+                          -  BlocksSent:  5
+                          -  BrpcSendTime:  874.642us
+                          -  BrpcSendTime.Wait:  927.157us
+                          -  BytesSent:  1.77  KB
+                          -  CompressTime:  151.498us
+                          -  IgnoreRows:  0
+                          -  LocalBytesSent:  0.00  
+                          -  LocalSendTime:  0ns
+                          -  LocalSentRows:  0
+                          -  MemoryUsage:  
+                              -  PeakMemoryUsage:  9.91  KB
+                          -  OverallThroughput:  2.4516706466674805  MB/sec
+                          -  SerializeBatchTime:  104.722us
+                          -  SplitBlockDistributeByChannelTime:  0ns
+                          -  SplitBlockHashComputeTime:  0ns
+                          -  UncompressedRowBatchSize:  2.88  KB
+                    VHASH_JOIN_NODE  (id=1415):(Active:  1s356ms,  %  non-child:  0.00%)
+                          -  JoinType:  RIGHT_OUTER_JOIN
+                          -  HashTableBuckets:  256,  
+                          -  HashTableFilledBuckets:  9,  
+                          -  AllocateResourceTime:  33.855us
+                          -  BuildBuckets:  256
+                          -  BuildCollisions:  1
+                          -  FilledBuckets:  9
+                          -  MemoryUsage:  
+                              -  BuildBlocks:  1.95  KB
+                              -  BuildKeyArena:  4.00  KB
+                              -  HashTable:  10.00  KB
+                              -  PeakMemoryUsage:  0.00  
+                              -  ProbeKeyArena:  4.00  KB
+                          -  OpenTime:  596.296ms
+                          -  OtherJoinConjunctTime:  0ns
+                          -  ProjectionTime:  411.364us
+                          -  PublishRuntimeFilterTime:  71.22us
+                          -  PushDownComputeTime:  11.602us
+                          -  RowsReturned:  11
+                          -  RowsReturnedRate:  8
+                        ProbePhase:
+                              -  ProbeExprCallTime:  5.289us
+                              -  ProbeFindNextTime:  759.134ms
+                              -  ProbeRows:  7
+                              -  ProbeTime:  969.148us
+                                  -  BuildOutputBlock:  503.34us
+                                  -  JoinFilterTimer:  436ns
+                                  -  ProbeWhenBuildSideOutputTime:  97.421us
+                                  -  ProbeWhenProbeSideOutputTime:  15.466us
+                                  -  ProbeWhenProcessHashTableTime:  45.228us
+                                  -  ProbeWhenSearchHashTableTime:  11.408us
+                        BuildPhase:
+                              -  BuildExprCallTime:  2.584us
+                              -  BuildGetNextTime:  595.912ms
+                              -  BuildRows:  11
+                              -  BuildRuntimeFilterTime:  0ns
+                              -  BuildSideHashComputingTime:  4.80us
+                              -  BuildTableConvertToPartitionedTime:  0ns
+                              -  BuildTableExpanseTime:  0ns
+                              -  BuildTableInsertTime:  12.961us
+                              -  BuildTime:  292.443us
+                                  -  BuildSideMergeBlockTime:  97.38us
+                                  -  BuildTableTime:  24.431us
+                        VEXCHANGE_NODE  (id=1412):(Active:  595.903ms,  %  non-child:  0.00%)
+                              -  BlocksProduced:  2
+                              -  BytesReceived:  1014.00  B
+                              -  DataArrivalWaitTime:  595.865ms
+                              -  DecompressBytes:  1.26  KB
+                              -  DecompressTime:  3.205us
+                              -  DeserializeRowBatchTimer:  46.662us
+                              -  FirstBatchArrivalWaitTime:  13.928ms
+                              -  LocalBytesReceived:  910.00  B
+                              -  MemoryUsage:  
+                                  -  Blocks:  50.25  KB
+                                  -  PeakMemoryUsage:  3.41  KB
+                              -  ProjectionTime:  0ns
+                              -  RowsProduced:  6
+                              -  RowsReturned:  11
+                              -  RowsReturnedRate:  18
+                              -  SendersBlockedTotalTimer(*):  0ns
+                        VEXCHANGE_NODE  (id=1401):(Active:  759.87ms,  %  non-child:  0.00%)
+                              -  BlocksProduced:  3
+                              -  BytesReceived:  305.00  B
+                              -  DataArrivalWaitTime:  759.52ms
+                              -  DecompressBytes:  220.00  B
+                              -  DecompressTime:  9.328us
+                              -  DeserializeRowBatchTimer:  67.461us
+                              -  FirstBatchArrivalWaitTime:  3.202ms
+                              -  LocalBytesReceived:  99.00  B
+                              -  MemoryUsage:  
+                                  -  Blocks:  12.38  KB
+                                  -  PeakMemoryUsage:  3.41  KB
+                              -  ProjectionTime:  0ns
+                              -  RowsProduced:  4
+                              -  RowsReturned:  7
+                              -  RowsReturnedRate:  9
+                              -  SendersBlockedTotalTimer(*):  0ns
+                Instance  83398e5a0f16430a-8a3554b9fd2ed88a  (host=TNetworkAddress(hostname:172.18.8.81,  port:9060)):(Active:  1s357ms,  %  non-child:  0.00%)
+                      -  DorisBeVersion:  096a33a
+                      -  BlocksProduced:  4
+                      -  FragmentCpuTime:  1.480ms
+                      -  RowsProduced:  8
+                    VDataStreamSender  (dst_id=1421,  dst_fragments=[{"83398e5a0f16430a-8a3554b9fd2ed88d"}]):(Active:  408.162us,  %  non-child:  0.00%)
+                          -  BlocksSent:  5
+                          -  BrpcSendTime:  535.549us
+                          -  BrpcSendTime.Wait:  566.797us
+                          -  BytesSent:  1.53  KB
+                          -  CompressTime:  75.244us
+                          -  IgnoreRows:  0
+                          -  LocalBytesSent:  0.00  
+                          -  LocalSendTime:  0ns
+                          -  LocalSentRows:  0
+                          -  MemoryUsage:  
+                              -  PeakMemoryUsage:  17.64  KB
+                          -  OverallThroughput:  3.651963233947754  MB/sec
+                          -  SerializeBatchTime:  64.205us
+                          -  SplitBlockDistributeByChannelTime:  0ns
+                          -  SplitBlockHashComputeTime:  0ns
+                          -  UncompressedRowBatchSize:  2.32  KB
+                    VHASH_JOIN_NODE  (id=1415):(Active:  1s356ms,  %  non-child:  0.00%)
+                          -  JoinType:  RIGHT_OUTER_JOIN
+                          -  HashTableBuckets:  256,  
+                          -  HashTableFilledBuckets:  8,  
+                          -  AllocateResourceTime:  30.149us
+                          -  BuildBuckets:  256
+                          -  BuildCollisions:  0
+                          -  FilledBuckets:  8
+                          -  MemoryUsage:  
+                              -  BuildBlocks:  1.43  KB
+                              -  BuildKeyArena:  4.00  KB
+                              -  HashTable:  10.00  KB
+                              -  PeakMemoryUsage:  0.00  
+                              -  ProbeKeyArena:  4.00  KB
+                          -  OpenTime:  596.457ms
+                          -  OtherJoinConjunctTime:  0ns
+                          -  ProjectionTime:  267.143us
+                          -  PublishRuntimeFilterTime:  55.603us
+                          -  PushDownComputeTime:  12.737us
+                          -  RowsReturned:  8
+                          -  RowsReturnedRate:  5
+                        ProbePhase:
+                              -  ProbeExprCallTime:  3.337us
+                              -  ProbeFindNextTime:  759.275ms
+                              -  ProbeRows:  7
+                              -  ProbeTime:  670.812us
+                                  -  BuildOutputBlock:  333.262us
+                                  -  JoinFilterTimer:  720ns
+                                  -  ProbeWhenBuildSideOutputTime:  58.78us
+                                  -  ProbeWhenProbeSideOutputTime:  9.678us
+                                  -  ProbeWhenProcessHashTableTime:  30.50us
+                                  -  ProbeWhenSearchHashTableTime:  6.521us
+                        BuildPhase:
+                              -  BuildExprCallTime:  4.706us
+                              -  BuildGetNextTime:  596.122ms
+                              -  BuildRows:  8
+                              -  BuildRuntimeFilterTime:  0ns
+                              -  BuildSideHashComputingTime:  3.66us
+                              -  BuildTableConvertToPartitionedTime:  0ns
+                              -  BuildTableExpanseTime:  0ns
+                              -  BuildTableInsertTime:  9.207us
+                              -  BuildTime:  255.858us
+                                  -  BuildSideMergeBlockTime:  94.301us
+                                  -  BuildTableTime:  19.751us
+                        VEXCHANGE_NODE  (id=1412):(Active:  596.112ms,  %  non-child:  0.00%)
+                              -  BlocksProduced:  3
+                              -  BytesReceived:  1.21  KB
+                              -  DataArrivalWaitTime:  596.29ms
+                              -  DecompressBytes:  1.09  KB
+                              -  DecompressTime:  2.675us
+                              -  DeserializeRowBatchTimer:  163.264us
+                              -  FirstBatchArrivalWaitTime:  13.976ms
+                              -  LocalBytesReceived:  748.00  B
+                              -  MemoryUsage:  
+                                  -  Blocks:  50.06  KB
+                                  -  PeakMemoryUsage:  3.41  KB
+                              -  ProjectionTime:  0ns
+                              -  RowsProduced:  4
+                              -  RowsReturned:  8
+                              -  RowsReturnedRate:  13
+                              -  SendersBlockedTotalTimer(*):  0ns
+                        VEXCHANGE_NODE  (id=1401):(Active:  759.242ms,  %  non-child:  0.00%)
+                              -  BlocksProduced:  3
+                              -  BytesReceived:  334.00  B
+                              -  DataArrivalWaitTime:  759.213ms
+                              -  DecompressBytes:  253.00  B
+                              -  DecompressTime:  7.673us
+                              -  DeserializeRowBatchTimer:  35.427us
+                              -  FirstBatchArrivalWaitTime:  3.126ms
+                              -  LocalBytesReceived:  66.00  B
+                              -  MemoryUsage:  
+                                  -  Blocks:  12.31  KB
+                                  -  PeakMemoryUsage:  3.41  KB
+                              -  ProjectionTime:  0ns
+                              -  RowsProduced:  5
+                              -  RowsReturned:  7
+                              -  RowsReturnedRate:  9
+                              -  SendersBlockedTotalTimer(*):  0ns
+                Instance  83398e5a0f16430a-8a3554b9fd2ed88c  (host=TNetworkAddress(hostname:172.18.8.82,  port:9060)):(Active:  596.220ms,  %  non-child:  0.00%)
+                      -  DorisBeVersion:  096a33a
+                      -  BlocksProduced:  0
+                      -  FragmentCpuTime:  206.667us
+                      -  RowsProduced:  0
+                    VDataStreamSender  (dst_id=1421,  dst_fragments=[{"83398e5a0f16430a-8a3554b9fd2ed88d"}]):(Active:  29.349us,  %  non-child:  0.00%)
+                          -  BlocksSent:  0
+                          -  BrpcSendTime:  0ns
+                          -  BrpcSendTime.Wait:  48ns
+                          -  BytesSent:  0.00  
+                          -  CompressTime:  0ns
+                          -  IgnoreRows:  0
+                          -  LocalBytesSent:  0.00  
+                          -  LocalSendTime:  0ns
+                          -  LocalSentRows:  0
+                          -  MemoryUsage:  
+                              -  PeakMemoryUsage:  3.88  KB
+                          -  OverallThroughput:  0.0  /sec
+                          -  SerializeBatchTime:  0ns
+                          -  SplitBlockDistributeByChannelTime:  0ns
+                          -  SplitBlockHashComputeTime:  0ns
+                          -  UncompressedRowBatchSize:  0.00  
+                    VHASH_JOIN_NODE  (id=1415):(Active:  596.197ms,  %  non-child:  0.00%)
+                          -  JoinType:  RIGHT_OUTER_JOIN
+                          -  AllocateResourceTime:  27.972us
+                          -  BuildBuckets:  0
+                          -  BuildCollisions:  0
+                          -  FilledBuckets:  0
+                          -  MemoryUsage:  
+                              -  BuildBlocks:  0.00  
+                              -  BuildKeyArena:  0.00  
+                              -  HashTable:  0.00  
+                              -  PeakMemoryUsage:  0.00  
+                              -  ProbeKeyArena:  0.00  
+                          -  OpenTime:  596.197ms
+                          -  OtherJoinConjunctTime:  0ns
+                          -  ProjectionTime:  0ns
+                          -  PublishRuntimeFilterTime:  70.394us
+                          -  PushDownComputeTime:  0ns
+                          -  RowsReturned:  0
+                          -  RowsReturnedRate:  0
+                        ProbePhase:
+                              -  ProbeExprCallTime:  0ns
+                              -  ProbeFindNextTime:  0ns
+                              -  ProbeRows:  0
+                              -  ProbeTime:  0ns
+                                  -  BuildOutputBlock:  0ns
+                                  -  JoinFilterTimer:  0ns
+                                  -  ProbeWhenBuildSideOutputTime:  0ns
+                                  -  ProbeWhenProbeSideOutputTime:  0ns
+                                  -  ProbeWhenProcessHashTableTime:  0ns
+                                  -  ProbeWhenSearchHashTableTime:  0ns
+                        BuildPhase:
+                              -  BuildExprCallTime:  0ns
+                              -  BuildGetNextTime:  596.15ms
+                              -  BuildRows:  0
+                              -  BuildRuntimeFilterTime:  0ns
+                              -  BuildSideHashComputingTime:  0ns
+                              -  BuildTableConvertToPartitionedTime:  0ns
+                              -  BuildTableExpanseTime:  0ns
+                              -  BuildTableInsertTime:  0ns
+                              -  BuildTime:  117.0us
+                                  -  BuildSideMergeBlockTime:  0ns
+                                  -  BuildTableTime:  0ns
+                        VEXCHANGE_NODE  (id=1412):(Active:  596.11ms,  %  non-child:  0.00%)
+                              -  BlocksProduced:  0
+                              -  BytesReceived:  0.00  
+                              -  DataArrivalWaitTime:  596.8ms
+                              -  DecompressBytes:  0.00  
+                              -  DecompressTime:  0ns
+                              -  DeserializeRowBatchTimer:  0ns
+                              -  FirstBatchArrivalWaitTime:  596.8ms
+                              -  LocalBytesReceived:  0.00  
+                              -  MemoryUsage:  
+                                  -  Blocks:  0.00  
+                                  -  PeakMemoryUsage:  3.41  KB
+                              -  ProjectionTime:  0ns
+                              -  RowsProduced:  0
+                              -  RowsReturned:  0
+                              -  RowsReturnedRate:  0
+                              -  SendersBlockedTotalTimer(*):  0ns
+                        VEXCHANGE_NODE  (id=1401):(Active:  340ns,  %  non-child:  0.00%)
+                              -  BlocksProduced:  0
+                              -  BytesReceived:  0.00  
+                              -  DataArrivalWaitTime:  0ns
+                              -  DecompressBytes:  0.00  
+                              -  DecompressTime:  0ns
+                              -  DeserializeRowBatchTimer:  0ns
+                              -  FirstBatchArrivalWaitTime:  0ns
+                              -  LocalBytesReceived:  0.00  
+                              -  MemoryUsage:  
+                                  -  Blocks:  0.00  
+                                  -  PeakMemoryUsage:  0.00  
+                              -  ProjectionTime:  0ns
+                              -  RowsProduced:  0
+                              -  RowsReturned:  0
+                              -  RowsReturnedRate:  0
+                              -  SendersBlockedTotalTimer(*):  0ns
+            Fragment  2:
+                Instance  83398e5a0f16430a-8a3554b9fd2ed887  (host=TNetworkAddress(hostname:172.18.8.82,  port:9060)):(Active:  1s356ms,  %  non-child:  0.00%)
+                      -  DorisBeVersion:  096a33a
+                      -  BlocksProduced:  3
+                      -  FragmentCpuTime:  620.676us
+                      -  RowsProduced:  5
+                    VDataStreamSender  (dst_id=1401,  dst_fragments=[{"83398e5a0f16430a-8a3554b9fd2ed88a",  "83398e5a0f16430a-8a3554b9fd2ed88b",  "83398e5a0f16430a-8a3554b9fd2ed88c"}]):(Active:  119.736us,  %  non-child:  0.00%)
+                          -  BlocksSent:  2
+                          -  BrpcSendTime:  66.932us
+                          -  BrpcSendTime.Wait:  350.640us
+                          -  BytesSent:  207.00  B
+                          -  CompressTime:  12.934us
+                          -  IgnoreRows:  0
+                          -  LocalBytesSent:  0.00  
+                          -  LocalSendTime:  0ns
+                          -  LocalSentRows:  0
+                          -  MemoryUsage:  
+                              -  PeakMemoryUsage:  33.97  KB
+                          -  OverallThroughput:  1.6487150192260742  MB/sec
+                          -  SerializeBatchTime:  26.746us
+                          -  SplitBlockDistributeByChannelTime:  30.367us
+                          -  SplitBlockHashComputeTime:  5.364us
+                          -  UncompressedRowBatchSize:  253.00  B
+                    VNewOlapScanNode(dwd_lcyl_fin_opr_register_merge)  (id=1392):(Active:  1s355ms,  %  non-child:  0.00%)
+                          -  RuntimeFilters:  :  RuntimeFilter:  (id  =  1,  type  =  in_or_bloomfilter),  RuntimeFilter:  (id  =  0,  type  =  in_or_bloomfilter),  
+                          -  PushDownPredicates:  [{__DORIS_DELETE_SIGN__  IN  [0]},  {hos_code  IN  [0001]}]
+                          -  KeyRanges:  ScanKeys:ScanKey=[MZ000005758559  :  MZ000005758559]ScanKey=[MZ000007698314  :  MZ000007698314]ScanKey=[MZ000025748154  :  MZ000025748154]ScanKey=[MZ120005716142  :  MZ120005716142]ScanKey=[MZGH0001300750  :  MZGH0001300750]ScanKey=[MZGH0001319550  :  MZGH0001319550]ScanKey=[MZGH0007876506  :  MZGH0007876506]ScanKey=[MZGH0010028810  :  MZGH0010028810]ScanKey=[MZGH0010030684  :  MZGH0010030684]ScanKey=[MZGH0010030969  :  MZGH0010030969]ScanKey=[MZXS0000259298  :  MZXS0000259298]ScanKey=[MZYE0006106649  :  MZYE0006106649]ScanKey=[SF000049395406  :  SF000049395406]ScanKey=[SF000052466512  :  SF000052466512]ScanKey=[SF000056094447  :  SF000056094447]ScanKey=[SF000066226368  :  SF000066226368]ScanKey=[SF100052370989  :  SF100052370989]
+                          -  TabletIds:  [70386528,  70386580,  70386572,  70386576,  70386592,  70386556,  70386564]
+                          -  UseSpecificThreadToken:  False
+                          -  AcquireRuntimeFilterTime:  596.689ms
+                          -  AllocateResourceTime:  596.903ms
+                          -  GetNextTime:  758.859ms
+                          -  MaxScannerThreadNum:  7
+                          -  MemoryUsage:  
+                              -  PeakMemoryUsage:  0.00  
+                          -  NumScanners:  7
+                          -  OpenTime:  596.904ms
+                          -  ProcessConjunctTime:  130.486us
+                          -  ProjectionTime:  64.718us
+                          -  RowsReturned:  5
+                          -  RowsReturnedRate:  3
+                          -  ScanByteRead:  216.00  KB
+                          -  ScanRowsRead:  5
+                          -  ScannerWorkerWaitTime:  3s200ms
+                          -  TabletNum:  7
+                          -  TotalReadThroughput:  0
+                        RuntimeFilter:  (id  =  1,  type  =  in_or_bloomfilter):
+                              -  Info:  [IsPushDown  =  true,  RuntimeFilterState  =  READY,  IsIgnored  =  false,  HasRemoteTarget  =  true,  HasLocalTarget  =  false]
+                              -  RealRuntimeFilterType:  in
+                              -  InFilterSize:  1
+                              -  MergeTime:  0  ms
+                        RuntimeFilter:  (id  =  0,  type  =  in_or_bloomfilter):
+                              -  Info:  [IsPushDown  =  true,  RuntimeFilterState  =  READY,  IsIgnored  =  false,  HasRemoteTarget  =  true,  HasLocalTarget  =  false]
+                              -  RealRuntimeFilterType:  in
+                              -  InFilterSize:  17
+                              -  MergeTime:  0  ms
+                        VScanner:
+                              -  ReadColumns:  [clinic_code,  hos_code,  is_emergency,  __DORIS_DELETE_SIGN__]
+                              -  PreEvaluatePredicates:  
+ComparisonPredicateBase(TINYINT,  EQ),  column_id=130,  opposite=false
+                              -  BlockConvertTime:  0ns
+                              -  BlockFetchTime:  1.688ms
+                              -  MemoryUsage:  
+                                  -  FreeBlocks:  144.00  KB
+                                  -  QueuedBlocks:  72.00  KB
+                              -  NewlyCreateFreeBlocksNum:  2
+                              -  ReaderInitTime:  0ns
+                              -  RowsDelFiltered:  0
+                              -  ScannerBatchWaitTime:  758.796ms
+                              -  ScannerConvertBlockTime:  0ns
+                              -  ScannerCpuTime:  19.599ms
+                              -  ScannerCtxSchedCount:  9
+                              -  ScannerCtxSchedTime:  16.484us
+                              -  ScannerFilterTime:  5.779us
+                              -  ScannerGetBlockTime:  3.364ms
+                              -  ScannerInitTime:  59.364us
+                              -  ScannerPrefilterTime:  0ns
+                              -  ScannerSchedCount:  7
+                            SegmentIterator:
+                                  -  BitmapIndexFilterTimer:  60.181us
+                                  -  BlockConditionsFilteredBloomFilterTime:  5.297us
+                                  -  BlockConditionsFilteredDictTime:  14.619us
+                                  -  BlockConditionsFilteredTime:  197.795us
+                                  -  BlockConditionsFilteredZonemapRuntimePredicateTime:  0ns
+                                  -  BlockConditionsFilteredZonemapTime:  99.639us
+                                  -  BlockInitSeekCount:  0
+                                  -  BlockInitSeekTime:  0ns
+                                  -  BlockInitTime:  5.670ms
+                                  -  BlockLoadTime:  6.386ms
+                                  -  BlocksLoad:  31
+                                  -  CachedPagesNum:  27
+                                  -  CompressedBytesRead:  0.00  
+                                  -  DecompressorTimer:  0ns
+                                  -  ExprFilterEvalTime:  0ns
+                                  -  FirstReadSeekCount:  0
+                                  -  FirstReadSeekTime:  0ns
+                                  -  FirstReadTime:  46.453us
+                                  -  IOTimer:  0ns
+                                  -  InvertedIndexFilterTime:  6.75us
+                                  -  InvertedIndexQueryBitmapCopyTime:  0ns
+                                  -  InvertedIndexQueryBitmapOpTime:  0ns
+                                  -  InvertedIndexQueryCacheHit:  0
+                                  -  InvertedIndexQueryCacheMiss:  0
+                                  -  InvertedIndexQueryTime:  0ns
+                                  -  InvertedIndexSearcherOpenTime:  0ns
+                                  -  InvertedIndexSearcherSearchTime:  0ns
+                                  -  LazyReadSeekCount:  0
+                                  -  LazyReadSeekTime:  0ns
+                                  -  LazyReadTime:  487.356us
+                                  -  NumSegmentFiltered:  24
+                                  -  NumSegmentTotal:  52
+                                  -  OutputColumnTime:  5.388us
+                                  -  OutputIndexResultColumnTimer:  646ns
+                                  -  RawRowsRead:  5
+                                  -  RowsBitmapIndexFiltered:  0
+                                  -  RowsBloomFilterFiltered:  0
+                                  -  RowsConditionsFiltered:  0
+                                  -  RowsDictFiltered:  0
+                                  -  RowsInvertedIndexFiltered:  0
+                                  -  RowsKeyRangeFiltered:  13.603046M  (13603046)
+                                  -  RowsShortCircuitPredFiltered:  0
+                                  -  RowsShortCircuitPredInput:  0
+                                  -  RowsVectorPredFiltered:  0
+                                  -  RowsVectorPredInput:  5
+                                  -  RowsZonemapFiltered:  0
+                                  -  RowsZonemapRuntimePredicateFiltered:  0
+                                  -  SecondReadTime:  0ns
+                                  -  ShortPredEvalTime:  148ns
+                                  -  TotalPagesNum:  27
+                                  -  UncompressedBytesRead:  0.00  
+                                  -  VectorPredEvalTime:  1.478us
+                Instance  83398e5a0f16430a-8a3554b9fd2ed888  (host=TNetworkAddress(hostname:172.18.8.83,  port:9060)):(Active:  1s8ms,  %  non-child:  0.00%)
+                      -  DorisBeVersion:  096a33a
+                      -  BlocksProduced:  5
+                      -  FragmentCpuTime:  537.366us
+                      -  RowsProduced:  6
+                    VDataStreamSender  (dst_id=1401,  dst_fragments=[{"83398e5a0f16430a-8a3554b9fd2ed88a",  "83398e5a0f16430a-8a3554b9fd2ed88b",  "83398e5a0f16430a-8a3554b9fd2ed88c"}]):(Active:  72.131us,  %  non-child:  0.00%)
+                          -  BlocksSent:  3
+                          -  BrpcSendTime:  49.158us
+                          -  BrpcSendTime.Wait:  242.686us
+                          -  BytesSent:  116.00  B
+                          -  CompressTime:  5.446us
+                          -  IgnoreRows:  0
+                          -  LocalBytesSent:  99.00  B
+                          -  LocalSendTime:  22.88us
+                          -  LocalSentRows:  3
+                          -  MemoryUsage:  
+                              -  PeakMemoryUsage:  41.19  KB
+                          -  OverallThroughput:  1.5336847305297852  MB/sec
+                          -  SerializeBatchTime:  10.419us
+                          -  SplitBlockDistributeByChannelTime:  14.431us
+                          -  SplitBlockHashComputeTime:  6.764us
+                          -  UncompressedRowBatchSize:  143.00  B
+                    VNewOlapScanNode(dwd_lcyl_fin_opr_register_merge)  (id=1392):(Active:  1s8ms,  %  non-child:  0.00%)
+                          -  RuntimeFilters:  :  RuntimeFilter:  (id  =  1,  type  =  in_or_bloomfilter),  RuntimeFilter:  (id  =  0,  type  =  in_or_bloomfilter),  
+                          -  PushDownPredicates:  [{__DORIS_DELETE_SIGN__  IN  [0]},  {hos_code  IN  [0001]}]
+                          -  KeyRanges:  ScanKeys:ScanKey=[MZ000005758559  :  MZ000005758559]ScanKey=[MZ000007698314  :  MZ000007698314]ScanKey=[MZ000025748154  :  MZ000025748154]ScanKey=[MZ120005716142  :  MZ120005716142]ScanKey=[MZGH0001300750  :  MZGH0001300750]ScanKey=[MZGH0001319550  :  MZGH0001319550]ScanKey=[MZGH0007876506  :  MZGH0007876506]ScanKey=[MZGH0010028810  :  MZGH0010028810]ScanKey=[MZGH0010030684  :  MZGH0010030684]ScanKey=[MZGH0010030969  :  MZGH0010030969]ScanKey=[MZXS0000259298  :  MZXS0000259298]ScanKey=[MZYE0006106649  :  MZYE0006106649]ScanKey=[SF000049395406  :  SF000049395406]ScanKey=[SF000052466512  :  SF000052466512]ScanKey=[SF000056094447  :  SF000056094447]ScanKey=[SF000066226368  :  SF000066226368]ScanKey=[SF100052370989  :  SF100052370989]
+                          -  TabletIds:  [70386552,  70386600,  70386584,  70386544,  70386540,  70386524,  70386548]
+                          -  UseSpecificThreadToken:  False
+                          -  AcquireRuntimeFilterTime:  596.569ms
+                          -  AllocateResourceTime:  596.764ms
+                          -  GetNextTime:  411.432ms
+                          -  MaxScannerThreadNum:  7
+                          -  MemoryUsage:  
+                              -  PeakMemoryUsage:  0.00  
+                          -  NumScanners:  7
+                          -  OpenTime:  596.764ms
+                          -  ProcessConjunctTime:  107.462us
+                          -  ProjectionTime:  50.221us
+                          -  RowsReturned:  6
+                          -  RowsReturnedRate:  5
+                          -  ScanByteRead:  432.00  KB
+                          -  ScanRowsRead:  6
+                          -  ScannerWorkerWaitTime:  371.926ms
+                          -  TabletNum:  7
+                          -  TotalReadThroughput:  0
+                        RuntimeFilter:  (id  =  1,  type  =  in_or_bloomfilter):
+                              -  Info:  [IsPushDown  =  true,  RuntimeFilterState  =  READY,  IsIgnored  =  false,  HasRemoteTarget  =  true,  HasLocalTarget  =  false]
+                              -  RealRuntimeFilterType:  in
+                              -  InFilterSize:  1
+                              -  MergeTime:  0  ms
+                        RuntimeFilter:  (id  =  0,  type  =  in_or_bloomfilter):
+                              -  Info:  [IsPushDown  =  true,  RuntimeFilterState  =  READY,  IsIgnored  =  false,  HasRemoteTarget  =  true,  HasLocalTarget  =  false]
+                              -  RealRuntimeFilterType:  in
+                              -  InFilterSize:  17
+                              -  MergeTime:  0  ms
+                        VScanner:
+                              -  ReadColumns:  [clinic_code,  hos_code,  is_emergency,  __DORIS_DELETE_SIGN__]
+                              -  PreEvaluatePredicates:  
+ComparisonPredicateBase(TINYINT,  EQ),  column_id=130,  opposite=false
+                              -  BlockConvertTime:  0ns
+                              -  BlockFetchTime:  437.13us
+                              -  MemoryUsage:  
+                                  -  FreeBlocks:  144.00  KB
+                                  -  QueuedBlocks:  72.00  KB
+                              -  NewlyCreateFreeBlocksNum:  2
+                              -  ReaderInitTime:  0ns
+                              -  RowsDelFiltered:  0
+                              -  ScannerBatchWaitTime:  411.363ms
+                              -  ScannerConvertBlockTime:  0ns
+                              -  ScannerCpuTime:  17.854ms
+                              -  ScannerCtxSchedCount:  9
+                              -  ScannerCtxSchedTime:  9.15us
+                              -  ScannerFilterTime:  5.363us
+                              -  ScannerGetBlockTime:  4.151ms
+                              -  ScannerInitTime:  61.89us
+                              -  ScannerPrefilterTime:  0ns
+                              -  ScannerSchedCount:  7
+                            SegmentIterator:
+                                  -  BitmapIndexFilterTimer:  91.805us
+                                  -  BlockConditionsFilteredBloomFilterTime:  8.583us
+                                  -  BlockConditionsFilteredDictTime:  26.186us
+                                  -  BlockConditionsFilteredTime:  294.848us
+                                  -  BlockConditionsFilteredZonemapRuntimePredicateTime:  0ns
+                                  -  BlockConditionsFilteredZonemapTime:  141.908us
+                                  -  BlockInitSeekCount:  0
+                                  -  BlockInitSeekTime:  0ns
+                                  -  BlockInitTime:  2.381ms
+                                  -  BlockLoadTime:  3.4ms
+                                  -  BlocksLoad:  34
+                                  -  CachedPagesNum:  37
+                                  -  CompressedBytesRead:  0.00  
+                                  -  DecompressorTimer:  0ns
+                                  -  ExprFilterEvalTime:  0ns
+                                  -  FirstReadSeekCount:  0
+                                  -  FirstReadSeekTime:  0ns
+                                  -  FirstReadTime:  36.672us
+                                  -  IOTimer:  0ns
+                                  -  InvertedIndexFilterTime:  9.221us
+                                  -  InvertedIndexQueryBitmapCopyTime:  0ns
+                                  -  InvertedIndexQueryBitmapOpTime:  0ns
+                                  -  InvertedIndexQueryCacheHit:  0
+                                  -  InvertedIndexQueryCacheMiss:  0
+                                  -  InvertedIndexQueryTime:  0ns
+                                  -  InvertedIndexSearcherOpenTime:  0ns
+                                  -  InvertedIndexSearcherSearchTime:  0ns
+                                  -  LazyReadSeekCount:  0
+                                  -  LazyReadSeekTime:  0ns
+                                  -  LazyReadTime:  369.916us
+                                  -  NumSegmentFiltered:  25
+                                  -  NumSegmentTotal:  53
+                                  -  OutputColumnTime:  7.462us
+                                  -  OutputIndexResultColumnTimer:  872ns
+                                  -  RawRowsRead:  6
+                                  -  RowsBitmapIndexFiltered:  0
+                                  -  RowsBloomFilterFiltered:  0
+                                  -  RowsConditionsFiltered:  0
+                                  -  RowsDictFiltered:  0
+                                  -  RowsInvertedIndexFiltered:  0
+                                  -  RowsKeyRangeFiltered:  13.607189M  (13607189)
+                                  -  RowsShortCircuitPredFiltered:  0
+                                  -  RowsShortCircuitPredInput:  0
+                                  -  RowsVectorPredFiltered:  0
+                                  -  RowsVectorPredInput:  6
+                                  -  RowsZonemapFiltered:  0
+                                  -  RowsZonemapRuntimePredicateFiltered:  0
+                                  -  SecondReadTime:  0ns
+                                  -  ShortPredEvalTime:  232ns
+                                  -  TotalPagesNum:  37
+                                  -  UncompressedBytesRead:  0.00  
+                                  -  VectorPredEvalTime:  2.100us
+                Instance  83398e5a0f16430a-8a3554b9fd2ed889  (host=TNetworkAddress(hostname:172.18.8.81,  port:9060)):(Active:  599.849ms,  %  non-child:  0.00%)
+                      -  DorisBeVersion:  096a33a
+                      -  BlocksProduced:  1
+                      -  FragmentCpuTime:  397.202us
+                      -  RowsProduced:  3
+                    VDataStreamSender  (dst_id=1401,  dst_fragments=[{"83398e5a0f16430a-8a3554b9fd2ed88a",  "83398e5a0f16430a-8a3554b9fd2ed88b",  "83398e5a0f16430a-8a3554b9fd2ed88c"}]):(Active:  32.86us,  %  non-child:  0.00%)
+                          -  BlocksSent:  3
+                          -  BrpcSendTime:  44.72us
+                          -  BrpcSendTime.Wait:  180.513us
+                          -  BytesSent:  62.00  B
+                          -  CompressTime:  4.756us
+                          -  IgnoreRows:  0
+                          -  LocalBytesSent:  66.00  B
+                          -  LocalSendTime:  10.505us
+                          -  LocalSentRows:  2
+                          -  MemoryUsage:  
+                              -  PeakMemoryUsage:  32.72  KB
+                          -  OverallThroughput:  1.8427906036376953  MB/sec
+                          -  SerializeBatchTime:  19.0us
+                          -  SplitBlockDistributeByChannelTime:  6.168us
+                          -  SplitBlockHashComputeTime:  1.405us
+                          -  UncompressedRowBatchSize:  77.00  B
+                    VNewOlapScanNode(dwd_lcyl_fin_opr_register_merge)  (id=1392):(Active:  599.519ms,  %  non-child:  0.00%)
+                          -  RuntimeFilters:  :  RuntimeFilter:  (id  =  1,  type  =  in_or_bloomfilter),  RuntimeFilter:  (id  =  0,  type  =  in_or_bloomfilter),  
+                          -  PushDownPredicates:  [{__DORIS_DELETE_SIGN__  IN  [0]},  {hos_code  IN  [0001]}]
+                          -  KeyRanges:  ScanKeys:ScanKey=[MZ000005758559  :  MZ000005758559]ScanKey=[MZ000007698314  :  MZ000007698314]ScanKey=[MZ000025748154  :  MZ000025748154]ScanKey=[MZ120005716142  :  MZ120005716142]ScanKey=[MZGH0001300750  :  MZGH0001300750]ScanKey=[MZGH0001319550  :  MZGH0001319550]ScanKey=[MZGH0007876506  :  MZGH0007876506]ScanKey=[MZGH0010028810  :  MZGH0010028810]ScanKey=[MZGH0010030684  :  MZGH0010030684]ScanKey=[MZGH0010030969  :  MZGH0010030969]ScanKey=[MZXS0000259298  :  MZXS0000259298]ScanKey=[MZYE0006106649  :  MZYE0006106649]ScanKey=[SF000049395406  :  SF000049395406]ScanKey=[SF000052466512  :  SF000052466512]ScanKey=[SF000056094447  :  SF000056094447]ScanKey=[SF000066226368  :  SF000066226368]ScanKey=[SF100052370989  :  SF100052370989]
+                          -  TabletIds:  [70386532,  70386536,  70386588,  70386568,  70386560,  70386596]
+                          -  UseSpecificThreadToken:  False
+                          -  AcquireRuntimeFilterTime:  596.879ms
+                          -  AllocateResourceTime:  597.102ms
+                          -  GetNextTime:  2.415ms
+                          -  MaxScannerThreadNum:  6
+                          -  MemoryUsage:  
+                              -  PeakMemoryUsage:  0.00  
+                          -  NumScanners:  6
+                          -  OpenTime:  597.103ms
+                          -  ProcessConjunctTime:  136.65us
+                          -  ProjectionTime:  19.894us
+                          -  RowsReturned:  3
+                          -  RowsReturnedRate:  5
+                          -  ScanByteRead:  216.00  KB
+                          -  ScanRowsRead:  3
+                          -  ScannerWorkerWaitTime:  210.60us
+                          -  TabletNum:  6
+                          -  TotalReadThroughput:  0
+                        RuntimeFilter:  (id  =  1,  type  =  in_or_bloomfilter):
+                              -  Info:  [IsPushDown  =  true,  RuntimeFilterState  =  READY,  IsIgnored  =  false,  HasRemoteTarget  =  true,  HasLocalTarget  =  false]
+                              -  RealRuntimeFilterType:  in
+                              -  InFilterSize:  1
+                              -  MergeTime:  0  ms
+                        RuntimeFilter:  (id  =  0,  type  =  in_or_bloomfilter):
+                              -  Info:  [IsPushDown  =  true,  RuntimeFilterState  =  READY,  IsIgnored  =  false,  HasRemoteTarget  =  true,  HasLocalTarget  =  false]
+                              -  RealRuntimeFilterType:  in
+                              -  InFilterSize:  17
+                              -  MergeTime:  0  ms
+                        VScanner:
+                              -  ReadColumns:  [clinic_code,  hos_code,  is_emergency,  __DORIS_DELETE_SIGN__]
+                              -  PreEvaluatePredicates:  
+ComparisonPredicateBase(TINYINT,  EQ),  column_id=130,  opposite=false
+                              -  BlockConvertTime:  0ns
+                              -  BlockFetchTime:  283.547us
+                              -  MemoryUsage:  
+                                  -  FreeBlocks:  144.00  KB
+                                  -  QueuedBlocks:  72.00  KB
+                              -  NewlyCreateFreeBlocksNum:  3
+                              -  ReaderInitTime:  0ns
+                              -  RowsDelFiltered:  0
+                              -  ScannerBatchWaitTime:  2.403ms
+                              -  ScannerConvertBlockTime:  0ns
+                              -  ScannerCpuTime:  11.517ms
+                              -  ScannerCtxSchedCount:  8
+                              -  ScannerCtxSchedTime:  58.776us
+                              -  ScannerFilterTime:  1.518us
+                              -  ScannerGetBlockTime:  414.156us
+                              -  ScannerInitTime:  65.337us
+                              -  ScannerPrefilterTime:  0ns
+                              -  ScannerSchedCount:  6
+                            SegmentIterator:
+                                  -  BitmapIndexFilterTimer:  30.33us
+                                  -  BlockConditionsFilteredBloomFilterTime:  2.743us
+                                  -  BlockConditionsFilteredDictTime:  17.717us
+                                  -  BlockConditionsFilteredTime:  111.520us
+                                  -  BlockConditionsFilteredZonemapRuntimePredicateTime:  0ns
+                                  -  BlockConditionsFilteredZonemapTime:  51.902us
+                                  -  BlockInitSeekCount:  0
+                                  -  BlockInitSeekTime:  0ns
+                                  -  BlockInitTime:  1.464ms
+                                  -  BlockLoadTime:  1.601ms
+                                  -  BlocksLoad:  27
+                                  -  CachedPagesNum:  18
+                                  -  CompressedBytesRead:  0.00  
+                                  -  DecompressorTimer:  0ns
+                                  -  ExprFilterEvalTime:  0ns
+                                  -  FirstReadSeekCount:  0
+                                  -  FirstReadSeekTime:  0ns
+                                  -  FirstReadTime:  14.292us
+                                  -  IOTimer:  0ns
+                                  -  InvertedIndexFilterTime:  2.700us
+                                  -  InvertedIndexQueryBitmapCopyTime:  0ns
+                                  -  InvertedIndexQueryBitmapOpTime:  0ns
+                                  -  InvertedIndexQueryCacheHit:  0
+                                  -  InvertedIndexQueryCacheMiss:  0
+                                  -  InvertedIndexQueryTime:  0ns
+                                  -  InvertedIndexSearcherOpenTime:  0ns
+                                  -  InvertedIndexSearcherSearchTime:  0ns
+                                  -  LazyReadSeekCount:  0
+                                  -  LazyReadSeekTime:  0ns
+                                  -  LazyReadTime:  40.261us
+                                  -  NumSegmentFiltered:  23
+                                  -  NumSegmentTotal:  47
+                                  -  OutputColumnTime:  1.402us
+                                  -  OutputIndexResultColumnTimer:  257ns
+                                  -  RawRowsRead:  3
+                                  -  RowsBitmapIndexFiltered:  0
+                                  -  RowsBloomFilterFiltered:  0
+                                  -  RowsConditionsFiltered:  0
+                                  -  RowsDictFiltered:  0
+                                  -  RowsInvertedIndexFiltered:  0
+                                  -  RowsKeyRangeFiltered:  11.661563M  (11661563)
+                                  -  RowsShortCircuitPredFiltered:  0
+                                  -  RowsShortCircuitPredInput:  0
+                                  -  RowsVectorPredFiltered:  0
+                                  -  RowsVectorPredInput:  3
+                                  -  RowsZonemapFiltered:  475.136K  (475136)
+                                  -  RowsZonemapRuntimePredicateFiltered:  0
+                                  -  SecondReadTime:  0ns
+                                  -  ShortPredEvalTime:  123ns
+                                  -  TotalPagesNum:  18
+                                  -  UncompressedBytesRead:  0.00  
+                                  -  VectorPredEvalTime:  718ns
+            Fragment  3:
+                Instance  83398e5a0f16430a-8a3554b9fd2ed884  (host=TNetworkAddress(hostname:172.18.8.82,  port:9060)):(Active:  596.350ms,  %  non-child:  0.00%)
+                      -  DorisBeVersion:  096a33a
+                      -  BlocksProduced:  2
+                      -  FragmentCpuTime:  382.745us
+                      -  RowsProduced:  2
+                    VDataStreamSender  (dst_id=1412,  dst_fragments=[{"83398e5a0f16430a-8a3554b9fd2ed88a",  "83398e5a0f16430a-8a3554b9fd2ed88b",  "83398e5a0f16430a-8a3554b9fd2ed88c"}]):(Active:  73.788us,  %  non-child:  0.00%)
+                          -  BlocksSent:  2
+                          -  BrpcSendTime:  47.622us
+                          -  BrpcSendTime.Wait:  274.570us
+                          -  BytesSent:  384.00  B
+                          -  CompressTime:  10.481us
+                          -  IgnoreRows:  0
+                          -  LocalBytesSent:  0.00  
+                          -  LocalSendTime:  0ns
+                          -  LocalSentRows:  0
+                          -  MemoryUsage:  
+                              -  PeakMemoryUsage:  61.86  KB
+                          -  OverallThroughput:  4.963014602661133  MB/sec
+                          -  SerializeBatchTime:  24.359us
+                          -  SplitBlockDistributeByChannelTime:  24.846us
+                          -  SplitBlockHashComputeTime:  2.791us
+                          -  UncompressedRowBatchSize:  552.00  B
+                    VNewOlapScanNode(dwd_lcyl_ord_seedoctrecord_merge)  (id=1402):(Active:  595.758ms,  %  non-child:  0.00%)
+                          -  RuntimeFilters:  :  
+                          -  PushDownPredicates:  [{empiid  IN  [1500535696]},  {__DORIS_DELETE_SIGN__  IN  [0]}]
+                          -  KeyRanges:  ScanKeys:ScanKey=[  :  �]
+                          -  TabletIds:  [65254082,  65254102,  65254110]
+                          -  UseSpecificThreadToken:  False
+                          -  AcquireRuntimeFilterTime:  346ns
+                          -  AllocateResourceTime:  111.602us
+                          -  GetNextTime:  595.647ms
+                          -  MaxScannerThreadNum:  3
+                          -  MemoryUsage:  
+                              -  PeakMemoryUsage:  0.00  
+                          -  NumScanners:  3
+                          -  OpenTime:  111.879us
+                          -  ProcessConjunctTime:  72.524us
+                          -  ProjectionTime:  107.92us
+                          -  RowsReturned:  2
+                          -  RowsReturnedRate:  3
+                          -  ScanByteRead:  680.00  KB
+                          -  ScanRowsRead:  2
+                          -  ScannerWorkerWaitTime:  1s8ms
+                          -  TabletNum:  3
+                          -  TotalReadThroughput:  0
+                        VScanner:
+                              -  ReadColumns:  [record_id,  hos_code,  patient_name,  doct_code,  visit_id,  jzlsh,  diag_code,  diag_name,  jzksbm,  zdrq,  jzksmc
+,  outpat_no,  doct_sign,  empiid,  __DORIS_DELETE_SIGN__]
+                              -  PreEvaluatePredicates:  
+ComparisonPredicateBase(TINYINT,  EQ),  column_id=52,  opposite=false
+                              -  BlockConvertTime:  0ns
+                              -  BlockFetchTime:  391.971us
+                              -  MemoryUsage:  
+                                  -  FreeBlocks:  680.00  KB
+                                  -  QueuedBlocks:  340.00  KB
+                              -  NewlyCreateFreeBlocksNum:  2
+                              -  ReaderInitTime:  0ns
+                              -  RowsDelFiltered:  3
+                              -  ScannerBatchWaitTime:  595.601ms
+                              -  ScannerConvertBlockTime:  0ns
+                              -  ScannerCpuTime:  18.986ms
+                              -  ScannerCtxSchedCount:  5
+                              -  ScannerCtxSchedTime:  5.422us
+                              -  ScannerFilterTime:  4.487us
+                              -  ScannerGetBlockTime:  1.818ms
+                              -  ScannerInitTime:  16.905us
+                              -  ScannerPrefilterTime:  0ns
+                              -  ScannerSchedCount:  3
+                            SegmentIterator:
+                                  -  BitmapIndexFilterTimer:  1.242ms
+                                  -  BlockConditionsFilteredBloomFilterTime:  6.838us
+                                  -  BlockConditionsFilteredDictTime:  3.446us
+                                  -  BlockConditionsFilteredTime:  1.567ms
+                                  -  BlockConditionsFilteredZonemapRuntimePredicateTime:  0ns
+                                  -  BlockConditionsFilteredZonemapTime:  252.709us
+                                  -  BlockInitSeekCount:  0
+                                  -  BlockInitSeekTime:  0ns
+                                  -  BlockInitTime:  2.83ms
+                                  -  BlockLoadTime:  5.261ms
+                                  -  BlocksLoad:  48
+                                  -  CachedPagesNum:  48
+                                  -  CompressedBytesRead:  0.00  
+                                  -  DecompressorTimer:  0ns
+                                  -  ExprFilterEvalTime:  0ns
+                                  -  FirstReadSeekCount:  0
+                                  -  FirstReadSeekTime:  0ns
+                                  -  FirstReadTime:  34.997us
+                                  -  IOTimer:  0ns
+                                  -  InvertedIndexFilterTime:  32.961us
+                                  -  InvertedIndexQueryBitmapCopyTime:  0ns
+                                  -  InvertedIndexQueryBitmapOpTime:  0ns
+                                  -  InvertedIndexQueryCacheHit:  0
+                                  -  InvertedIndexQueryCacheMiss:  0
+                                  -  InvertedIndexQueryTime:  0ns
+                                  -  InvertedIndexSearcherOpenTime:  0ns
+                                  -  InvertedIndexSearcherSearchTime:  0ns
+                                  -  LazyReadSeekCount:  0
+                                  -  LazyReadSeekTime:  0ns
+                                  -  LazyReadTime:  2.542ms
+                                  -  NumSegmentFiltered:  2
+                                  -  NumSegmentTotal:  48
+                                  -  OutputColumnTime:  3.882us
+                                  -  OutputIndexResultColumnTimer:  293ns
+                                  -  RawRowsRead:  2
+                                  -  RowsBitmapIndexFiltered:  15.200572M  (15200572)
+                                  -  RowsBloomFilterFiltered:  0
+                                  -  RowsConditionsFiltered:  0
+                                  -  RowsDictFiltered:  0
+                                  -  RowsInvertedIndexFiltered:  0
+                                  -  RowsKeyRangeFiltered:  0
+                                  -  RowsShortCircuitPredFiltered:  0
+                                  -  RowsShortCircuitPredInput:  0
+                                  -  RowsVectorPredFiltered:  0
+                                  -  RowsVectorPredInput:  2
+                                  -  RowsZonemapFiltered:  0
+                                  -  RowsZonemapRuntimePredicateFiltered:  0
+                                  -  SecondReadTime:  0ns
+                                  -  ShortPredEvalTime:  104ns
+                                  -  TotalPagesNum:  48
+                                  -  UncompressedBytesRead:  0.00  
+                                  -  VectorPredEvalTime:  936ns
+                Instance  83398e5a0f16430a-8a3554b9fd2ed885  (host=TNetworkAddress(hostname:172.18.8.83,  port:9060)):(Active:  393.462ms,  %  non-child:  0.00%)
+                      -  DorisBeVersion:  096a33a
+                      -  BlocksProduced:  3
+                      -  FragmentCpuTime:  540.307us
+                      -  RowsProduced:  7
+                    VDataStreamSender  (dst_id=1412,  dst_fragments=[{"83398e5a0f16430a-8a3554b9fd2ed88a",  "83398e5a0f16430a-8a3554b9fd2ed88b",  "83398e5a0f16430a-8a3554b9fd2ed88c"}]):(Active:  188.475us,  %  non-child:  0.00%)
+                          -  BlocksSent:  3
+                          -  BrpcSendTime:  68.290us
+                          -  BrpcSendTime.Wait:  5.277ms
+                          -  BytesSent:  394.00  B
+                          -  CompressTime:  11.363us
+                          -  IgnoreRows:  0
+                          -  LocalBytesSent:  910.00  B
+                          -  LocalSendTime:  36.158us
+                          -  LocalSentRows:  5
+                          -  MemoryUsage:  
+                              -  PeakMemoryUsage:  115.66  KB
+                          -  OverallThroughput:  1.9936199188232422  MB/sec
+                          -  SerializeBatchTime:  23.62us
+                          -  SplitBlockDistributeByChannelTime:  100.284us
+                          -  SplitBlockHashComputeTime:  4.822us
+                          -  UncompressedRowBatchSize:  564.00  B
+                    VNewOlapScanNode(dwd_lcyl_ord_seedoctrecord_merge)  (id=1402):(Active:  387.647ms,  %  non-child:  0.00%)
+                          -  RuntimeFilters:  :  
+                          -  PushDownPredicates:  [{empiid  IN  [1500535696]},  {__DORIS_DELETE_SIGN__  IN  [0]}]
+                          -  KeyRanges:  ScanKeys:ScanKey=[  :  �]
+                          -  TabletIds:  [65254086,  65254114,  65254098]
+                          -  UseSpecificThreadToken:  False
+                          -  AcquireRuntimeFilterTime:  191ns
+                          -  AllocateResourceTime:  132.602us
+                          -  GetNextTime:  387.515ms
+                          -  MaxScannerThreadNum:  3
+                          -  MemoryUsage:  
+                              -  PeakMemoryUsage:  0.00  
+                          -  NumScanners:  3
+                          -  OpenTime:  132.791us
+                          -  ProcessConjunctTime:  92.177us
+                          -  ProjectionTime:  123.841us
+                          -  RowsReturned:  7
+                          -  RowsReturnedRate:  18
+                          -  ScanByteRead:  1.66  MB
+                          -  ScanRowsRead:  7
+                          -  ScannerWorkerWaitTime:  648.623ms
+                          -  TabletNum:  3
+                          -  TotalReadThroughput:  0
+                        VScanner:
+                              -  ReadColumns:  [record_id,  hos_code,  patient_name,  doct_code,  visit_id,  jzlsh,  diag_code,  diag_name,  jzksbm,  zdrq,  jzksmc
+,  outpat_no,  doct_sign,  empiid,  __DORIS_DELETE_SIGN__]
+                              -  PreEvaluatePredicates:  
+ComparisonPredicateBase(TINYINT,  EQ),  column_id=52,  opposite=false
+                              -  BlockConvertTime:  0ns
+                              -  BlockFetchTime:  2.492ms
+                              -  MemoryUsage:  
+                                  -  FreeBlocks:  680.00  KB
+                                  -  QueuedBlocks:  340.00  KB
+                              -  NewlyCreateFreeBlocksNum:  2
+                              -  ReaderInitTime:  0ns
+                              -  RowsDelFiltered:  5
+                              -  ScannerBatchWaitTime:  387.470ms
+                              -  ScannerConvertBlockTime:  0ns
+                              -  ScannerCpuTime:  14.712ms
+                              -  ScannerCtxSchedCount:  4
+                              -  ScannerCtxSchedTime:  5.585us
+                              -  ScannerFilterTime:  8.400us
+                              -  ScannerGetBlockTime:  3.269ms
+                              -  ScannerInitTime:  16.718us
+                              -  ScannerPrefilterTime:  0ns
+                              -  ScannerSchedCount:  3
+                            SegmentIterator:
+                                  -  BitmapIndexFilterTimer:  977.716us
+                                  -  BlockConditionsFilteredBloomFilterTime:  10.748us
+                                  -  BlockConditionsFilteredDictTime:  7.531us
+                                  -  BlockConditionsFilteredTime:  1.447ms
+                                  -  BlockConditionsFilteredZonemapRuntimePredicateTime:  0ns
+                                  -  BlockConditionsFilteredZonemapTime:  394.256us
+                                  -  BlockInitSeekCount:  0
+                                  -  BlockInitSeekTime:  0ns
+                                  -  BlockInitTime:  1.750ms
+                                  -  BlockLoadTime:  7.201ms
+                                  -  BlocksLoad:  52
+                                  -  CachedPagesNum:  143
+                                  -  CompressedBytesRead:  0.00  
+                                  -  DecompressorTimer:  0ns
+                                  -  ExprFilterEvalTime:  0ns
+                                  -  FirstReadSeekCount:  0
+                                  -  FirstReadSeekTime:  0ns
+                                  -  FirstReadTime:  44.827us
+                                  -  IOTimer:  0ns
+                                  -  InvertedIndexFilterTime:  24.289us
+                                  -  InvertedIndexQueryBitmapCopyTime:  0ns
+                                  -  InvertedIndexQueryBitmapOpTime:  0ns
+                                  -  InvertedIndexQueryCacheHit:  0
+                                  -  InvertedIndexQueryCacheMiss:  0
+                                  -  InvertedIndexQueryTime:  0ns
+                                  -  InvertedIndexSearcherOpenTime:  0ns
+                                  -  InvertedIndexSearcherSearchTime:  0ns
+                                  -  LazyReadSeekCount:  0
+                                  -  LazyReadSeekTime:  0ns
+                                  -  LazyReadTime:  5.31ms
+                                  -  NumSegmentFiltered:  2
+                                  -  NumSegmentTotal:  49
+                                  -  OutputColumnTime:  6.297us
+                                  -  OutputIndexResultColumnTimer:  681ns
+                                  -  RawRowsRead:  7
+                                  -  RowsBitmapIndexFiltered:  15.205053M  (15205053)
+                                  -  RowsBloomFilterFiltered:  0
+                                  -  RowsConditionsFiltered:  0
+                                  -  RowsDictFiltered:  0
+                                  -  RowsInvertedIndexFiltered:  0
+                                  -  RowsKeyRangeFiltered:  0
+                                  -  RowsShortCircuitPredFiltered:  0
+                                  -  RowsShortCircuitPredInput:  0
+                                  -  RowsVectorPredFiltered:  0
+                                  -  RowsVectorPredInput:  7
+                                  -  RowsZonemapFiltered:  0
+                                  -  RowsZonemapRuntimePredicateFiltered:  0
+                                  -  SecondReadTime:  0ns
+                                  -  ShortPredEvalTime:  214ns
+                                  -  TotalPagesNum:  143
+                                  -  UncompressedBytesRead:  0.00  
+                                  -  VectorPredEvalTime:  1.807us
+                Instance  83398e5a0f16430a-8a3554b9fd2ed886  (host=TNetworkAddress(hostname:172.18.8.81,  port:9060)):(Active:  14.309ms,  %  non-child:  0.00%)
+                      -  DorisBeVersion:  096a33a
+                      -  BlocksProduced:  4
+                      -  FragmentCpuTime:  549.832us
+                      -  RowsProduced:  10
+                    VDataStreamSender  (dst_id=1412,  dst_fragments=[{"83398e5a0f16430a-8a3554b9fd2ed88a",  "83398e5a0f16430a-8a3554b9fd2ed88b",  "83398e5a0f16430a-8a3554b9fd2ed88c"}]):(Active:  162.564us,  %  non-child:  0.00%)
+                          -  BlocksSent:  3
+                          -  BrpcSendTime:  65.741us
+                          -  BrpcSendTime.Wait:  178.770us
+                          -  BytesSent:  781.00  B
+                          -  CompressTime:  14.546us
+                          -  IgnoreRows:  0
+                          -  LocalBytesSent:  748.00  B
+                          -  LocalSendTime:  22.977us
+                          -  LocalSentRows:  4
+                          -  MemoryUsage:  
+                              -  PeakMemoryUsage:  124.47  KB
+                          -  OverallThroughput:  4.581700325012207  MB/sec
+                          -  SerializeBatchTime:  27.610us
+                          -  SplitBlockDistributeByChannelTime:  78.960us
+                          -  SplitBlockHashComputeTime:  4.375us
+                          -  UncompressedRowBatchSize:  1.26  KB
+                    VNewOlapScanNode(dwd_lcyl_ord_seedoctrecord_merge)  (id=1402):(Active:  13.670ms,  %  non-child:  0.00%)
+                          -  RuntimeFilters:  :  
+                          -  PushDownPredicates:  [{empiid  IN  [1500535696]},  {__DORIS_DELETE_SIGN__  IN  [0]}]
+                          -  KeyRanges:  ScanKeys:ScanKey=[  :  �]
+                          -  TabletIds:  [65254106,  65254094,  65254078,  65254090]
+                          -  UseSpecificThreadToken:  False
+                          -  AcquireRuntimeFilterTime:  244ns
+                          -  AllocateResourceTime:  147.716us
+                          -  GetNextTime:  13.523ms
+                          -  MaxScannerThreadNum:  4
+                          -  MemoryUsage:  
+                              -  PeakMemoryUsage:  0.00  
+                          -  NumScanners:  4
+                          -  OpenTime:  148.67us
+                          -  ProcessConjunctTime:  85.856us
+                          -  ProjectionTime:  112.197us
+                          -  RowsReturned:  10
+                          -  RowsReturnedRate:  731
+                          -  ScanByteRead:  1.99  MB
+                          -  ScanRowsRead:  10
+                          -  ScannerWorkerWaitTime:  67.205us
+                          -  TabletNum:  4
+                          -  TotalReadThroughput:  0
+                        VScanner:
+                              -  ReadColumns:  [record_id,  hos_code,  patient_name,  doct_code,  visit_id,  jzlsh,  diag_code,  diag_name,  jzksbm,  zdrq,  jzksmc
+,  outpat_no,  doct_sign,  empiid,  __DORIS_DELETE_SIGN__]
+                              -  PreEvaluatePredicates:  
+ComparisonPredicateBase(TINYINT,  EQ),  column_id=52,  opposite=false
+                              -  BlockConvertTime:  0ns
+                              -  BlockFetchTime:  6.999ms
+                              -  MemoryUsage:  
+                                  -  FreeBlocks:  1.33  MB
+                                  -  QueuedBlocks:  340.00  KB
+                              -  NewlyCreateFreeBlocksNum:  4
+                              -  ReaderInitTime:  0ns
+                              -  RowsDelFiltered:  17
+                              -  ScannerBatchWaitTime:  13.475ms
+                              -  ScannerConvertBlockTime:  0ns
+                              -  ScannerCpuTime:  34.340ms
+                              -  ScannerCtxSchedCount:  6
+                              -  ScannerCtxSchedTime:  30.335us
+                              -  ScannerFilterTime:  11.77us
+                              -  ScannerGetBlockTime:  8.649ms
+                              -  ScannerInitTime:  34.321us
+                              -  ScannerPrefilterTime:  0ns
+                              -  ScannerSchedCount:  4
+                            SegmentIterator:
+                                  -  BitmapIndexFilterTimer:  1.532ms
+                                  -  BlockConditionsFilteredBloomFilterTime:  17.615us
+                                  -  BlockConditionsFilteredDictTime:  8.233us
+                                  -  BlockConditionsFilteredTime:  2.287ms
+                                  -  BlockConditionsFilteredZonemapRuntimePredicateTime:  0ns
+                                  -  BlockConditionsFilteredZonemapTime:  637.567us
+                                  -  BlockInitSeekCount:  0
+                                  -  BlockInitSeekTime:  0ns
+                                  -  BlockInitTime:  2.774ms
+                                  -  BlockLoadTime:  23.911ms
+                                  -  BlocksLoad:  73
+                                  -  CachedPagesNum:  203
+                                  -  CompressedBytesRead:  0.00  
+                                  -  DecompressorTimer:  0ns
+                                  -  ExprFilterEvalTime:  0ns
+                                  -  FirstReadSeekCount:  0
+                                  -  FirstReadSeekTime:  0ns
+                                  -  FirstReadTime:  65.227us
+                                  -  IOTimer:  0ns
+                                  -  InvertedIndexFilterTime:  39.437us
+                                  -  InvertedIndexQueryBitmapCopyTime:  0ns
+                                  -  InvertedIndexQueryBitmapOpTime:  0ns
+                                  -  InvertedIndexQueryCacheHit:  0
+                                  -  InvertedIndexQueryCacheMiss:  0
+                                  -  InvertedIndexQueryTime:  0ns
+                                  -  InvertedIndexSearcherOpenTime:  0ns
+                                  -  InvertedIndexSearcherSearchTime:  0ns
+                                  -  LazyReadSeekCount:  0
+                                  -  LazyReadSeekTime:  0ns
+                                  -  LazyReadTime:  20.508ms
+                                  -  NumSegmentFiltered:  7
+                                  -  NumSegmentTotal:  74
+                                  -  OutputColumnTime:  8.616us
+                                  -  OutputIndexResultColumnTimer:  1.82us
+                                  -  RawRowsRead:  10
+                                  -  RowsBitmapIndexFiltered:  21.718788M  (21718788)
+                                  -  RowsBloomFilterFiltered:  0
+                                  -  RowsConditionsFiltered:  0
+                                  -  RowsDictFiltered:  0
+                                  -  RowsInvertedIndexFiltered:  0
+                                  -  RowsKeyRangeFiltered:  0
+                                  -  RowsShortCircuitPredFiltered:  0
+                                  -  RowsShortCircuitPredInput:  0
+                                  -  RowsVectorPredFiltered:  0
+                                  -  RowsVectorPredInput:  10
+                                  -  RowsZonemapFiltered:  0
+                                  -  RowsZonemapRuntimePredicateFiltered:  0
+                                  -  SecondReadTime:  0ns
+                                  -  ShortPredEvalTime:  326ns
+                                  -  TotalPagesNum:  203
+                                  -  UncompressedBytesRead:  0.00  
+                                  -  VectorPredEvalTime:  2.620us
+        LoadChannels:
